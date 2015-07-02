@@ -1,0 +1,25 @@
+{
+  "name": "grom358/php-static-reflection",
+  "description": "Reflection for PHP without class loading.",
+  "type": "library",
+  "keywords": [
+    "reflection"
+  ],
+  "license": "LGPL",
+  "authors": [
+    {
+      "name": "Cameron Zemek",
+      "role": "lead"
+    }
+  ],
+  "autoload": {
+    "psr-4" : {"StaticReflection\\": "src/"}
+  },
+  "require": {
+    "php": ">=5.4",
+    "phpdocumentor/reflection-docblock": "2.0.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.2.*"
+  }
+}
