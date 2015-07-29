@@ -377,6 +377,17 @@ EOF;
         $this->parser->parseSource($source);
     }
 
+    public function testComplexStringInBlock()
+    {
+        $source = <<<'EOF'
+<?php
+{
+    $embed = "{$var} ${var}!";
+}
+EOF;
+        $this->parser->parseSource($source);
+    }
+
     public function testHeredoc()
     {
         $source = <<<'EOF'

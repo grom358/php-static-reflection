@@ -294,7 +294,7 @@ class Parser
         $this->match('{');
         $braceCount = 1;
         while ($this->tokenType && $braceCount > 0) {
-            if ($this->tokenType === '{') {
+            if ($this->tokenType === '{' || $this->tokenType === T_CURLY_OPEN || $this->tokenType === T_DOLLAR_OPEN_CURLY_BRACES) {
                 $braceCount++;
             } elseif ($this->tokenType === '}') {
                 $braceCount--;
