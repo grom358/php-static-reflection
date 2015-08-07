@@ -120,12 +120,9 @@ class StaticReflectionProperty extends \ReflectionProperty
         if ($object) {
             return $object->{$this->propertyName};
         } elseif ($this->isStatic()) {
-            $class = $this->getDeclaringClass()->getName();
-            $propertyName = $this->propertyName;
-            return $class::$propertyName;
+            return $this->getDefaultValue();
         } else {
-            // @todo
-            return null;
+            throw new \ReflectionException('ReflectionProperty::getValue() expects exactly 1 parameter, 0 given');
         }
     }
 

@@ -186,4 +186,20 @@ class StaticReflectionTest extends \PHPUnit_Framework_TestCase {
             'defaultlessProperty' => null,
         ], $class->getDefaultProperties());
     }
+
+    public function testStaticPropertyGetValue()
+    {
+        $class = $this->factory->getClass('Example\Foo');
+        $this->assertEquals('staticProperty', $class->getProperty('staticProperty')->getValue());
+    }
+
+    /**
+     * @expectedException \ReflectionException
+     * @expectedExceptionMessage ReflectionProperty::getValue() expects exactly 1 parameter, 0 given
+     */
+    public function testPropertyGetValueNoObject()
+    {
+        $class = $this->factory->getClass('Example\Foo');
+        $class->getProperty('property')->getValue();
+    }
 }
