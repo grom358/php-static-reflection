@@ -211,4 +211,13 @@ class StaticReflectionTest extends \PHPUnit_Framework_TestCase {
     {
         $this->factory->getClass('Example\NoSuchClass');
     }
+
+    public function testIsCloneable()
+    {
+        $this->assertFalse($this->factory->getClass('Example\AbstractHello')->isCloneable());
+        $this->assertFalse($this->factory->getClass('Example\HelloTrait')->isCloneable());
+        $this->assertFalse($this->factory->getClass('Example\HelloInterface')->isCloneable());
+        $this->assertFalse($this->factory->getClass('Example\NotCloneable')->isCloneable());
+        $this->assertTrue($this->factory->getClass('Example\Hello')->isCloneable());
+    }
 }

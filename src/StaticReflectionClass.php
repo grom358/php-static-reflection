@@ -419,8 +419,14 @@ class StaticReflectionClass extends \ReflectionClass
      */
     public function isCloneable()
     {
-        // @todo
-        throw new ReflectionException('Method not implemented');
+        if ($this->isAbstract() || $this->isTrait() || $this->isInterface()) {
+            return false;
+        }
+        if ($this->hasMethod('__clone')) {
+            return $this->getMethod('__clone')->isPublic();
+        } else {
+            return true;
+        }
     }
 
     /**
