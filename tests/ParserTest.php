@@ -10,6 +10,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        /** @var ClassFinderInterface $finder */
         $finder = $this->getMock('StaticReflection\ClassFinderInterface');
         $factory = new StaticReflectionFactory($finder);
         $this->parser = new Parser($factory);
@@ -31,13 +32,13 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     public function testNamespace()
     {
-        $this->parser->parseSource('<?php /** test */ namespace MyNamespace\Test ; body();', '\Pharborist\Namespaces\NamespaceNode');
+        $this->parser->parseSource('<?php /** test */ namespace MyNamespace\Test ; body();');
 
         // Test with body
-        $this->parser->parseSource('namespace MyNamespace\Test\Body { }', '\Pharborist\Namespaces\NamespaceNode');
+        $this->parser->parseSource('namespace MyNamespace\Test\Body { }');
 
         // Test global
-        $this->parser->parseSource('namespace { }', '\Pharborist\Namespaces\NamespaceNode');
+        $this->parser->parseSource('namespace { }');
     }
 
     public function testUseDeclaration()
