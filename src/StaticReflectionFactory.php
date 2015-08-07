@@ -43,6 +43,10 @@ class StaticReflectionFactory {
      *   Fully qualified class name.
      *
      * @return \ReflectionClass
+     *   Reflection class.
+     * 
+     * @throws \ReflectionException
+     *   Class not found.
      */
     public function getClass($className)
     {
