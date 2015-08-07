@@ -81,6 +81,11 @@ class StaticReflectionClass extends \ReflectionClass
     protected $properties;
 
     /**
+     * @var array
+     */
+    protected $defaultProperties;
+
+    /**
      * @var \ReflectionMethod[]
      */
     protected $methods;
@@ -141,6 +146,7 @@ class StaticReflectionClass extends \ReflectionClass
         $this->parentClassFqn = $parentClassFqn;
         $this->constants = [];
         $this->properties = [];
+        $this->defaultProperties = [];
         $this->methods = [];
         $this->traitNames = [];
         $this->aliasRules = [];
@@ -188,6 +194,8 @@ class StaticReflectionClass extends \ReflectionClass
 
     protected function resolveClasses()
     {
+        /** @var StaticReflectionProperty[] $ownProperties */
+        $ownProperties = $this->properties;
         if ($parent = $this->getParentClass()) {
             foreach ($parent->getConstants() as $constantName => $constantValue) {
                 if (!isset($this->constants[$constantName])) {
@@ -206,6 +214,11 @@ class StaticReflectionClass extends \ReflectionClass
                     // @todo check access level matches parent property.
                 }
             }
+            $this->defaultProperties = $parent->getDefaultProperties();
+        }
+        // Default properties for this class.
+        foreach ($ownProperties as $property) {
+            $this->defaultProperties[$property->getName()] = $property->getDefaultValue();
         }
         // Apply trait precedence rules.
         $traitMethods = [];
@@ -1022,12 +1035,10 @@ class StaticReflectionClass extends \ReflectionClass
      */
     public function getDefaultProperties()
     {
-        $properties = [];
-        foreach ($this->properties as $property) {
-            // @todo
-            $properties[$property->getName()] = $property->getDefaultValue();
+        if (!$this->resolvedClasses) {
+            $this->resolveClasses();
         }
-        return $properties;
+        return $this->defaultProperties;
     }
 
     /**

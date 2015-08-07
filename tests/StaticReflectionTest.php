@@ -174,4 +174,16 @@ class StaticReflectionTest extends \PHPUnit_Framework_TestCase {
         $parameters = $method->getParameters();
         $this->assertEquals('abstract hello', $parameters[9]->getDefaultValue());
     }
+
+    public function testDefaultProperties()
+    {
+        $class = $this->factory->getClass('Example\Foo');
+        $this->assertEquals([
+            'inheritedProperty' => 'inheritedDefault',
+            'property' => 'propertyDefault',
+            'privateProperty' => 'privatePropertyDefault',
+            'staticProperty' => 'staticProperty',
+            'defaultlessProperty' => null,
+        ], $class->getDefaultProperties());
+    }
 }
