@@ -202,4 +202,13 @@ class StaticReflectionTest extends \PHPUnit_Framework_TestCase {
         $class = $this->factory->getClass('Example\Foo');
         $class->getProperty('property')->getValue();
     }
+
+    /**
+     * @expectedException \ReflectionException
+     * @expectedExceptionMessage Class Example\NoSuchClass does not exist
+     */
+    public function testNotFound()
+    {
+        $this->factory->getClass('Example\NoSuchClass');
+    }
 }

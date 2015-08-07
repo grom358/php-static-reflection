@@ -51,12 +51,11 @@ class StaticReflectionFactory {
         }
         $filename = $this->classFinder->findClassFile($className);
         if ($filename === false) {
-            // @todo
-            return new \ReflectionClass($className);
+            throw new \ReflectionException("Class $className does not exist");
         }
         $this->parseFile($filename);
         if (!isset($this->classes[$className])) {
-            // @todo
+            throw new \ReflectionException("Class $className does not exist");
         }
         return $this->classes[$className];
     }
